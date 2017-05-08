@@ -1,7 +1,7 @@
-var db = require('./server/db');
-var User = require('./server/api/users/user.model');
-var Conversation = require('./server/api/conversations/conversation.model');
-var Message = require('./server/api/messages/message.model');
+var db = require('./server/db').db;
+var User = require('./server/db').User;
+var Conversation = require('./server/db').Conversation;
+var Message = require('./server/db').Message;
 var Bluebird = require('bluebird');
 
 var users = [
@@ -41,7 +41,7 @@ var messages = [
 ];
 
 var syncingUsers = () => users.map(user => User.create(user));
-var syncingConversations = () => conversations.map(conversation => Conversation.create(conversation));
+var syncingConversations = () => conversations.map(conversation => Conversation.create(conversation, {include: [Message]}));
 var syncingMessages = () => messages.map(message => Message.create(message));
 
 db.sync({force: true})

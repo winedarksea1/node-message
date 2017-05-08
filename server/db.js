@@ -16,8 +16,13 @@ Conversation.belongsToMany(User, {
   foreignKey: 'conversation_id'
 });
 
-Conversation.hasMany(Message, {as: 'Messages'});
+Conversation.hasMany(Message);
 User.hasMany(Message, {as: 'Messages'});
 // Message.belongsTo(Conversation);
 
-module.exports = db;
+module.exports = {
+  db: db,
+  User: User,
+  Conversation: Conversation,
+  Message: Message
+};

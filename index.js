@@ -8,13 +8,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan('dev'));
-
-app.get('/', function (req, res, next) {
-  res.json('hello world');
-});
+app.use(express.static('./public'));
+// app.use(express.static('./browser'));
+//
+// app.get('/', function (req, res, next) {
+//   res.sendFile(__dirname + '/browser/index.html');
+// });
 
 app.use('/api', apiRouter);
 
-app.listen(3000, function () {
-  console.log('listening on port 3000');
+app.listen(1337, function () {
+  console.log('listening on port 1337');
 });

@@ -1,5 +1,8 @@
 var router = require('express').Router();
-var Conversation = require('./conversation.model');
+
+var Conversation = require('../../db').Conversation;
+var Message = require('../../db').Message;
+var User = require('../../db').User;
 
 router.get('/', function (req, res, next) {
   Conversation.findAll()
@@ -14,7 +17,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.param('id', function (req, res, next, id) {
-  Conversation.findById(id)
+  Conversation.findById(id, {include: Message})
   .then(conversation => {
     if (!conversation) throw Error(404);
     req.requestedConversation = conversation;
@@ -28,5 +31,6 @@ router.get('/:id', function (req, res, next) {
   .then(conversation => res.json(conversation))
   .catch(next);
 });
+
 
 module.exports = router;
